@@ -1,0 +1,5 @@
+[flake8]
+ignore = E501
+# E501: Line length is defined by black.
+exclude =
+    .venv/

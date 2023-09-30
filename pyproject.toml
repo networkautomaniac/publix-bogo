@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "publix-bogo"
+version = "0.1.0"
+description = ""
+authors = ["Aaron Britton <brittonleeaaron@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+bs4 = "^0.0.1"
+
+[tool.poetry.dev-dependencies]
+flake8 = "*"
+black = "*"
+bandit = "*"
+pydocstyle = "*"
+yamllint = "*"
+pylint = "*"
+invoke = "*"
+
+[tool.black]
+line-length = 120
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
