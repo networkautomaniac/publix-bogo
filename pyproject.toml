@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "publix-bogo"
 version = "0.1.0"
-description = ""
+description = "Get Publix supermarket bogo's for the week."
 authors = ["Aaron Britton <brittonleeaaron@gmail.com>"]
 readme = "README.md"
 
@@ -21,6 +21,10 @@ invoke = "*"
 
 [tool.black]
 line-length = 120
+
+[tool.pylint]
+# line-to-long - Line length is defined by black.
+disable = ["line-too-long"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
