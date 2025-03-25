@@ -1,4 +1,4 @@
-"""Provides Publix weekly BOGO itmes."""
+"""Provides Publix Supermarkets weekly BOGO items."""
 
 import re
 import requests
@@ -18,14 +18,14 @@ class PublixBogo:
         self.store_number = store_number
         self.bogo_data = self._get_bogo_data()
 
-    def _get_bogo_data(self) -> object:
-        """Get the BOGO data via Publix"s Accessibility Site.
+    def _get_bogo_data(self) -> BeautifulSoup:
+        """Get the BOGO data via Publix's Accessibility Site.
 
         Raises:
-            (str): An error is raised if the bogo data cannot be retreived.
+            str: An error is raised if the bogo data cannot be retrieved.
 
         Returns:
-            (object): Output is a BeautifulSoup object.
+            BeautifulSoup: Output is a BeautifulSoup object.
         """
         BASE_URL = "https://accessibleweeklyad.publix.com/PublixAccessibility/BrowseByListing/ByCategory/?StoreID"
         BOGO_ID = "CategoryID=5232540"
@@ -39,16 +39,16 @@ class PublixBogo:
             return bogo_soup
 
         except RequestException as request_error:
-            raise SystemExit(f"Erorr getting BOGO data: {request_error}")
+            raise SystemExit(f"Error getting BOGO data: {request_error}")
 
     def get_date(self) -> str:
         """Parse the weekly BOGO date.
 
         Raises:
-            (str): An error is raised if the date cannot be parsed from the Beautiful Soup data.
+            ValueError: If the date cannot be parsed from the Beautiful Soup data.
 
         Returns:
-            (str): Output is the date as is from the Beautfiul Soup data with stripped whitespace.
+            str: Output is the date as is from the Beautiful Soup data with stripped whitespace.
         """
         try:
             raw_date = self.bogo_data.find("div", class_="action-elide validDates")
@@ -63,10 +63,10 @@ class PublixBogo:
         """Parse the weekly BOGO date.
 
         Raises:
-            (str): An error is raised if the date cannot be parsed from the Beautiful Soup data.
+            str: An error is raised if the date cannot be parsed from the Beautiful Soup data.
 
         Returns:
-            (str): Output is a modified date using regex.
+            str: Output is a modified date using regex.
         """
         REGEX = r"(\d{1,2}/\d{1,2}\s-\s\d{1,2}/\d{1,2})"
 
@@ -84,7 +84,7 @@ class PublixBogo:
         """Get a list of the weekly BOGO items.
 
         Returns:
-            (list): Output is a sorted list of the weekly BOGO items.
+            list: Output is a sorted list of the weekly BOGO items.
         """
         bogo_items_list = []
 
@@ -95,3 +95,22 @@ class PublixBogo:
             bogo_items_list.append(bogo_item)
 
         return sorted(bogo_items_list)
+
+
+if __name__ == "__main__":
+    # Palm Crossings Store Number.
+    PALM_CROSSINGS = 2500579
+
+    bogo_data = PublixBogo(store_number=PALM_CROSSINGS)
+
+    # Get the date.
+    date = bogo_data.get_date()
+    print(date)
+
+    # Get a modified version of the date.
+    custom_date = bogo_data.get_modified_date()
+    print(custom_date)
+
+    # Get a list of all the BOGO's for the week.
+    bogo_items = bogo_data.get_bogo_items()
+    print(bogo_items)

@@ -1,4 +1,5 @@
 """Tasks to be performed using invoke."""
+
 from invoke import task
 
 
@@ -45,7 +46,7 @@ def pylint(context):
 
 
 @task
-def tests(context):
+def linters(context):
     """Run all linters."""
     print("Black...")
     black(context)
